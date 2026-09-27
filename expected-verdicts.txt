@@ -1,0 +1,5 @@
+L0-1 FAIL. l0-1-door.opdevio.xyz resolves and accepts TLS on 443, but the certificate is issued only for opdevio.xyz. The tester's verified TLS connection raises an SSLCertVerificationError for hostname mismatch, which l0_1 reports as FAIL.
+L0-2 UNOBSERVED. All four profiles verify TLS and fail the handshake before receiving an HTTP status, so parity() reports every profile as missing. With verification disabled, all four would receive the same 402 response, but the tester does not disable verification.
+L0-3 UNOBSERVED. The Accept: application/json requests fail at certificate verification, so there is no HTTP response to judge. If reached, the 402 has Content-Type application/json, not text/html.
+L0-4 UNOBSERVED. The tester's Python urllib POST probe fails at certificate verification, so c is None. If reached, POST /door returns 405 with Allow: GET, HEAD.
+L0-5 UNOBSERVED. The tester adds https://l0-1-door.opdevio.xyz/robots.txt. All four profiles fail certificate verification before receiving a status, so document parity is UNOBSERVED, and the robots rule check is UNOBSERVED because robots.txt was not read. If reached, robots.txt returns 404 to every client.
